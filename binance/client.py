@@ -2669,7 +2669,8 @@ class Client(BaseClient):
             ]
 
         """
-        return self._request_margin_api('get', 'asset/tradeFee', True, data=params)
+        endpoint = 'asset/query/trading-fee' if self.tld == "us" else 'asset/tradeFee'
+        return self._request_margin_api('get', endpoint, True, data=params)
 
     def get_asset_details(self, **params):
         """Fetch details on assets.
@@ -8718,7 +8719,8 @@ class AsyncClient(BaseClient):
     query_universal_transfer_history.__doc__ = Client.query_universal_transfer_history.__doc__
 
     async def get_trade_fee(self, **params):
-        return await self._request_margin_api('get', 'asset/tradeFee', True, data=params)
+        endpoint = 'asset/query/trading-fee' if self.tld == "us" else 'asset/tradeFee'
+        return await self._request_margin_api('get', endpoint, True, data=params)
     get_trade_fee.__doc__ = Client.get_trade_fee.__doc__
 
     async def get_asset_details(self, **params):
