@@ -3545,7 +3545,13 @@ class Client(BaseClient):
         :raises: BinanceRequestException, BinanceAPIException
 
         """
-        return self._request_margin_api('post', 'bnbBurn', signed=True, data=params)
+        if self.tld == 'us':
+            return {
+                    "spotBNBBurn": False,
+                    "interestBNBBurn": False
+                   }
+        else:
+            return self._request_margin_api('post', 'bnbBurn', signed=True, data=params)
 
     def get_bnb_burn_spot_margin(self, **params):
         """Get BNB Burn Status
@@ -3569,7 +3575,13 @@ class Client(BaseClient):
         :raises: BinanceRequestException, BinanceAPIException
 
         """
-        return self._request_margin_api('get', 'bnbBurn', signed=True, data=params)
+        if self.tld == 'us':
+            return {
+               "spotBNBBurn": False,
+               "interestBNBBurn": False
+            }
+        else:
+            return self._request_margin_api('get', 'bnbBurn', signed=True, data=params)
 
     def get_margin_price_index(self, **params):
         """Query margin priceIndex
@@ -8840,7 +8852,13 @@ class AsyncClient(BaseClient):
     toggle_bnb_burn_spot_margin.__doc__ = Client.toggle_bnb_burn_spot_margin.__doc__
 
     async def get_bnb_burn_spot_margin(self, **params):
-        return await self._request_margin_api('get', 'bnbBurn', signed=True, data=params)
+        if self.tld == 'us':        
+            return {
+               "spotBNBBurn": False,
+               "interestBNBBurn": False
+            }
+        else:
+            return await self._request_margin_api('get', 'bnbBurn', signed=True, data=params
     get_bnb_burn_spot_margin.__doc__ = Client.get_bnb_burn_spot_margin.__doc__
 
     async def get_margin_price_index(self, **params):
